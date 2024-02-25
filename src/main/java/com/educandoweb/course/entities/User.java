@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id // identifica que a coluna Id é o id da table User
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto incremento do banco de dados
 	private Long id;
 	private String name;
@@ -27,6 +27,7 @@ public class User implements Serializable{
 	public User() {}
 
 	public User(Long id, String name, String email, String phone, String password) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
