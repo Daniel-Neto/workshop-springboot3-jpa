@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +22,13 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
+	//Quando se tem uma relação Muitos para Um, o JPA carrega por padrão o objeto "Um" para
+	// o objeto Muitos. Nesse caso, se eu chamar Order, por padrão carrega o User.
+	// Isso se chama lazy loading.
 	@ManyToOne
 	@JoinColumn(name="client_id") // nome da chave estrangeira nessa table. Chave do cliente
 	private User client;
