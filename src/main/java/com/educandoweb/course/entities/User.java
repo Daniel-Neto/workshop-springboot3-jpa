@@ -29,6 +29,7 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	// Isso serve para obter os Users
 	@JsonIgnore // serve para evitar um loop infinito entre as entidades Cliente e Order
 	@OneToMany(mappedBy="client")  // aqui a gente passa o atributo client da class Order, isso serve para informar o objeto que está guardando os Orders na classe Order
 	private List<Order> orders = new ArrayList<>(); // já instancia a lista de pedidos
