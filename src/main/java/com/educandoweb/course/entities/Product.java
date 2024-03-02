@@ -9,8 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -32,7 +34,11 @@ public class Product implements Serializable{
 	// instancia-se por padrão para que não comece valendo null, mas sim vazia
 	// usa-se HashSet porque o Set é uma interface e não pode ser instanciada, por isso HashSet
 	//HashSet é a classe em si
-	@Transient
+	// A notação joinColumns e inverseJoinColumns serve para montar uma association table com 2 chaves
+	@ManyToMany
+	@JoinTable(name="tb_product_category", 
+	joinColumns = @JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {}
