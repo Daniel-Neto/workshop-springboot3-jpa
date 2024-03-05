@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -18,7 +19,7 @@ public class OrderItem implements Serializable{
 	
 	
 	@EmbeddedId  // essa anotation serve para classes de associação, que possuem chave composta
-	private OrderItemPK id;
+	private OrderItemPK id = new OrderItemPK(); // precisa instanciar esse Id pra não valer null
 	
 	private Integer quantity;
 	
@@ -33,7 +34,8 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 		this.price = price;
 	}
-
+	
+	@JsonIgnore  // Esse getOrder que está chamando o pedido associado ao item de pedido. Json ignore corta a relação cíclica
 	public Order getOrder() {
 		return id.getOrder();
 	}
