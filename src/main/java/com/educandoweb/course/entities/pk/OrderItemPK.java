@@ -22,7 +22,7 @@ public class OrderItemPK implements Serializable{
 	@JoinColumn(name="order_id")
 	private Order order;
 	
-	// É possível ter muitos OrderItemPK para um Order, por isso ManyToOne
+	// É possível ter muitos OrderItemPK para um Product, por isso ManyToOne
 	@ManyToOne
 	@JoinColumn(name="product_id")
 	private Product product;
