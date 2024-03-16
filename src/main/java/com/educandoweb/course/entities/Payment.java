@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,7 @@ public class Payment implements Serializable {
 	private Long id;
 	private Instant moment;
 	
+	@JsonIgnore // Evita o loop infinito. Desse modo o objeto Order obtém o Payment sem loop
 	@OneToOne
 	@MapsId  // Notação para indicar relação 1:1 com Order. Nesse caso a classe Payment é dependente e usa essa notação.
 	private Order order;

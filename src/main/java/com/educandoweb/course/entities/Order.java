@@ -29,8 +29,11 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	// Recebe o valor referente ao status do pedido
 	private Integer orderStatus;
+	
+	private Double total;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
@@ -55,12 +58,14 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(Long id, Instant moment, User client, OrderStatus orderStatus) {
+	public Order(Long id, Instant moment, User client, OrderStatus orderStatus, Double total) {
 		super();
 		this.id = id;
 		this.moment = moment;
 		this.client = client;
+		this.total = total;
 		setOrderStatus(orderStatus);
+
 	}
 
 	public Long getId() {
@@ -108,6 +113,19 @@ public class Order implements Serializable {
 	
 	public Set<OrderItem> getItems(){
 		return items;
+	}
+	
+	public Double getOrderTotal() {
+		double sum = 0.0;
+		for(OrderItem o : items) {
+			sum += o.getSubTotal();
+		}
+		return sum;
+	}
+	
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	@Override

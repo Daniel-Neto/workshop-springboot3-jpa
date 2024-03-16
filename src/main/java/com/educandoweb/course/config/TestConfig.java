@@ -77,9 +77,9 @@ public class TestConfig implements CommandLineRunner {
 		User u2 = new User(null,"Alex Green", "alex@gmail.com", "977777777", "123456");
 		
 		// Cria objetos Order no banco
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1, OrderStatus.PAID);
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2, OrderStatus.WAITING_PAYMENT);
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1, OrderStatus.WAITING_PAYMENT);
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1, OrderStatus.PAID,0.0);
+		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2, OrderStatus.WAITING_PAYMENT,0.0);
+		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1, OrderStatus.WAITING_PAYMENT,0.0);
 		
 		
 		
@@ -92,13 +92,20 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
 		
+		o1.getItems().add(oi1);
+		o1.getItems().add(oi2);
+		System.out.println("OLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		
+		System.out.println(o1.getOrderTotal());
 		// A gente cria um objeto Payment e inclui o Order relacionado a ele
 		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
 		// Seta o Payment relacionado  ao Order
 		o1.setPayment(pay1); 
 		// Salva o order novamente no banco, tratando de relacionar o Payment e o Order automaticamente
 		orderRepository.save(o1);
+		
 		
 	}
 
